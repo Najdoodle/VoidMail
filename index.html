@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoidMail</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+      <div class="min-h-screen flex justify-center items-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+          <h1 class="text-2xl font-bold text-center mb-4">VoidMail</h1>
+    
+          <form id="voidMailForm" class="space-y-4">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
+              <input type="email" id="email" name="email" required class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+            </div>
+    
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700">Your Message</label>
+              <textarea id="message" name="message" required rows="4" class="w-full mt-1 p-2 border border-gray-300 rounded-md"></textarea>
+            </div>
+    
+            <div>
+              <label for="sendTime" class="block text-sm font-medium text-gray-700">When to send</label>
+              <input type="datetime-local" id="sendTime" name="sendTime" required class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+            </div>
+    
+            <button type="submit" class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Send Message</button>
+          </form>
+    
+          <div id="successMessage" class="mt-4 hidden text-green-500 text-center">
+            Your message has been scheduled!
+          </div>
+        </div>
+      </div>
+    
+    
+  <script src="script.js"></script>
+</body>
+</html>
