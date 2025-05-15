@@ -7,25 +7,6 @@ const backBtn     = document.getElementById('backBtn');
 const form        = document.getElementById('voidMailForm');
 const feedback    = document.getElementById('feedback');
 
-let saved = localStorage.getItem('vmTheme');
-if (saved !== 'dark' && saved !== 'light') {
-  saved = 'dark';
-  localStorage.setItem('vmTheme', 'dark');
-}
-applyTheme(saved);
-
-const toggle = document.getElementById('themeToggle');
-toggle.addEventListener('click', () => {
-  const current = localStorage.getItem('vmTheme') || 'dark';
-  const next = current === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('vmTheme', next);
-  applyTheme(next);
-});
-
-function applyTheme(mode) {
-  document.documentElement.setAttribute('data-theme', mode);
-}
-
 const saved = localStorage.getItem('vmTheme') || 'dark';
 applyTheme(saved);
 if (saved === 'dark') {
