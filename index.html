@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VoidMail</title>
   <link rel="stylesheet" href="style.css"/>
-   <script>
+  <script>
     const theme = localStorage.getItem('vmTheme') || 'dark';
     document.documentElement.setAttribute('data-theme', theme);
   </script>
@@ -21,6 +21,13 @@
     <p class="description">
       Schedule messages to send into the digital void—only to return when the time is right.
     </p>
+
+    <!-- Command input box -->
+    <div class="command-box">
+      <input type="text" id="commandInput" placeholder="whats ur command" />
+      <pre id="invoxOutput" class="invox-output hidden"></pre>
+    </div>
+
     <button id="proceedBtn" class="primary-btn">Proceed</button>
   </section>
 
@@ -45,6 +52,60 @@
     <button id="backBtn" class="secondary-btn">← Back</button>
   </section>
 
-  <script src="script.js"></script>
+  <script>
+    // theme toggle
+    const toggleBtn = document.getElementById('themeToggle');
+    toggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('vmTheme', next);
+    });
+
+    // command input logic
+    const cmdInput = document.getElementById('commandInput');
+    const invoxOutput = document.getElementById('invoxOutput');
+
+    cmdInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = cmdInput.value.trim().toLowerCase();
+        if (cmd === 'cat') {
+          invoxOutput.textContent = `
+ /\_/\  
+( o.o ) 
+ > ^ <  `;
+          invoxOutput.classList.remove('hidden');
+        } else {
+          invoxOutput.textContent = "Unknown command";
+          invoxOutput.classList.remove('hidden');
+        }
+      }
+    });
+
+    // existing proceed/back logic
+    const proceedBtn = document.getElementById('proceedBtn');
+    const backBtn = document.getElementById('backBtn');
+    const homeSection = document.getElementById('homeSection');
+    const formSection = document.getElementById('formSection');
+
+    proceedBtn.addEventListener('click', () => {
+      homeSection.classList.add('hidden');
+      formSection.classList.remove('hidden');
+    });
+
+    backBtn.addEventListener('click', () => {
+      formSection.classList.add('hidden');
+      homeSection.classList.remove('hidden');
+    });
+
+    // form submit logic (example placeholder)
+    document.getElementById('voidMailForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // scheduling logic here...
+      const feedback = document.getElementById('feedback');
+      feedback.textContent = 'Your message has been sent to the void!';
+      feedback.classList.remove('hidden');
+    });
+  </script>
 </body>
 </html>
