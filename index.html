@@ -5,7 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VoidMail</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Command box styling */
+    .command-box {
+      margin: 1rem 0;
+      text-align: center;
+    }
+    #commandInput {
+      width: 60%;
+      max-width: 400px;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: #222;
+      color: #eee;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    #commandInput:focus {
+      border-color: #6cf;
+      box-shadow: 0 0 8px rgba(100, 220, 255, 0.6);
+    }
+    .invox-output {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.8);
+      color: #bada55;
+      font-family: monospace;
+      font-size: 1rem;
+      border-radius: 8px;
+      white-space: pre;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+    .invox-output.unknown {
+      color: #ff6060;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    /* Cat wiggle animation */
+    @keyframes wiggle {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-2px) rotate(-1deg); }
+      75% { transform: translateX(2px) rotate(1deg); }
+    }
+    .animate-cat {
+      animation: wiggle 0.25s ease-in-out 3;
+    }
+  </style>
   <script>
+    // theme load
     const theme = localStorage.getItem('vmTheme') || 'dark';
     document.documentElement.setAttribute('data-theme', theme);
   </script>
@@ -22,9 +74,8 @@
       Schedule messages to send into the digital void—only to return when the time is right.
     </p>
 
-    <!-- Command input box -->
     <div class="command-box">
-      <input type="text" id="commandInput" placeholder="whats ur command" />
+      <input type="text" id="commandInput" placeholder="whats ur command" autocomplete="off" />
       <pre id="invoxOutput" class="invox-output hidden"></pre>
     </div>
 
@@ -54,54 +105,51 @@
 
   <script>
     // theme toggle
-    const toggleBtn = document.getElementById('themeToggle');
-    toggleBtn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('vmTheme', next);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('vmTheme', nxt);
     });
 
-    // command input logic
+    // command logic
     const cmdInput = document.getElementById('commandInput');
     const invoxOutput = document.getElementById('invoxOutput');
 
     cmdInput.addEventListener('keyup', (e) => {
       if (e.key === 'Enter') {
+        invoxOutput.classList.add('hidden');
         const cmd = cmdInput.value.trim().toLowerCase();
-        if (cmd === 'cat') {
-          invoxOutput.textContent = `
- /\_/\  
-( o.o ) 
- > ^ <  `;
+        invoxOutput.textContent = '';
+        invoxOutput.classList.remove('unknown', 'animate-cat');
+        setTimeout(() => {
+          if (cmd === 'cat') {
+            invoxOutput.textContent = ` /\\_/\\  \n( o.o ) \n > ^ < `;
+            invoxOutput.classList.add('animate-cat');
+          } else {
+            invoxOutput.textContent = 'Unknown command';
+            invoxOutput.classList.add('unknown');
+          }
           invoxOutput.classList.remove('hidden');
-        } else {
-          invoxOutput.textContent = "Unknown command";
-          invoxOutput.classList.remove('hidden');
-        }
+        }, 100);
       }
     });
 
-    // existing proceed/back logic
+    // navigation between views
     const proceedBtn = document.getElementById('proceedBtn');
     const backBtn = document.getElementById('backBtn');
-    const homeSection = document.getElementById('homeSection');
-    const formSection = document.getElementById('formSection');
-
     proceedBtn.addEventListener('click', () => {
-      homeSection.classList.add('hidden');
-      formSection.classList.remove('hidden');
+      document.getElementById('homeSection').classList.add('hidden');
+      document.getElementById('formSection').classList.remove('hidden');
     });
-
     backBtn.addEventListener('click', () => {
-      formSection.classList.add('hidden');
-      homeSection.classList.remove('hidden');
+      document.getElementById('formSection').classList.add('hidden');
+      document.getElementById('homeSection').classList.remove('hidden');
     });
 
-    // form submit logic (example placeholder)
+    // form submission placeholder
     document.getElementById('voidMailForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      // scheduling logic here...
       const feedback = document.getElementById('feedback');
       feedback.textContent = 'Your message has been sent to the void!';
       feedback.classList.remove('hidden');
