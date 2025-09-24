@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoidMail - Send Messages Into The Void</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <div class="toggle-slider"></div>
+        </button>
+        <span class="toggle-label">Click me!</span>
+    </div>
+
+    <!-- Landing Page -->
+    <section id="landing-page" class="page active">
+        <div class="container">
+            <div class="landing-content">
+                <h1 class="main-title">VoidMail</h1>
+                <div class="subtitle">Send messages into the infinite void</div>
+                <p class="description">
+                    Write your thoughts, hopes, and dreams. Choose a date in the future. 
+                    Send your message into the cosmic void and let the universe decide its fate.
+                </p>
+                <button id="proceed-btn" class="proceed-btn">
+                    <span>Enter the Void</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App -->
+    <section id="main-app" class="page">
+        <div class="container">
+            <div class="app-header">
+                <h2 class="app-title">Compose Your Message</h2>
+                <button id="back-btn" class="back-btn">← Back to Landing</button>
+            </div>
+            
+            <div class="message-form">
+                <div class="form-group">
+                    <label for="message-text">Your message to the void:</label>
+                    <textarea 
+                        id="message-text" 
+                        placeholder="Write your thoughts, dreams, or secrets here..."
+                        rows="6"
+                    ></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="delivery-date">When should the void receive this?</label>
+                    <input 
+                        type="date" 
+                        id="delivery-date"
+                        min=""
+                    >
+                </div>
+                
+                <button id="send-btn" class="send-btn">
+                    <span>Send to the Void</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="status-message" class="status-message hidden"></div>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>
